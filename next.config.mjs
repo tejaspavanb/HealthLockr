@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-\texperimental: {
-\t\treactCompiler: true,
-\t},
-};
+const nextConfig = {};
 
 export default nextConfig;
 
+ 
