@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 
   const records = await prisma.record.findMany({
     where: { ownerId: patient.id },
-    orderBy: { createdAt: "desc" },
+    orderBy: { recordDate: "desc" },
   });
 
   return NextResponse.json({ records, patient });

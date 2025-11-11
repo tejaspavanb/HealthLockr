@@ -25,6 +25,8 @@ model User {
 
   role          Role     @default(USER)
   mciId         String?
+  hospitalName  String?
+  hospitalId    String?
 
   records       Record[] @relation("UserRecords")
   uploaded      Record[] @relation("UploadedRecords")
@@ -44,7 +46,11 @@ model Record {
 
   title         String
   description   String?
+  recordDate    DateTime
   fileUrl       String
+  fileKey       String
+  fileName      String
+  fileSize      Int
   createdAt     DateTime @default(now())
   accessLogs    AccessLog[] @relation("RecordAccessLogs")
 }

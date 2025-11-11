@@ -1,32 +1,35 @@
 "use client";
+
 import { useState } from "react";
+import { RecordUploader } from "@/components/RecordUploader";
 
 export default function UploadPage() {
-  const [ownerEmailOrAadhaar, setWho] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDesc] = useState("");
-  const [fileUrl, setFileUrl] = useState("");
+ const [refreshKey, setRefreshKey] = useState(0);
 
-  async function submit() {
-    const res = await fetch("/api/records/upload", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ownerEmailOrAadhaar, title, description, fileUrl }),
-    });
-    if (!res.ok) alert("Upload failed");
-    else alert("Uploaded");
-  }
-
-  return (
-    <div className="p-6 space-y-3">
-      <h2 className="text-xl font-semibold">Upload Document</h2>
-      <input className="w-full border rounded px-3 py-2" placeholder="Patient Email or Aadhaar" value={ownerEmailOrAadhaar} onChange={(e)=>setWho(e.target.value)} />
-      <input className="w-full border rounded px-3 py-2" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
-      <input className="w-full border rounded px-3 py-2" placeholder="Description" value={description} onChange={(e)=>setDesc(e.target.value)} />
-      <input className="w-full border rounded px-3 py-2" placeholder="File URL (MVP)" value={fileUrl} onChange={(e)=>setFileUrl(e.target.value)} />
-      <button className="rounded bg-black text-white px-3 py-2" onClick={submit}>Upload</button>
+ return (
+  <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+   <div className="rounded-3xl bg-white p-8 shadow-xl shadow-slate-200/60">
+    <div className="space-y-3">
+     <p className="text-sm font-medium uppercase tracking-wide text-indigo-600">
+      Hospital workspace
+     </p>
+     <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
+      Upload patient documentation
+     </h1>
+     <p className="text-sm text-slate-600">
+      Store lab reports, discharge summaries, and imaging securely in UploadThing.
+      Patients and doctors will see the files immediately once uploaded.
+     </p>
     </div>
-  );
+
+    <div className="mt-8">
+     <RecordUploader
+      key={refreshKey}
+      variant="patient"
+      onUploaded={() => setRefreshKey((v) => v + 1)}
+     />
+    </div>
+   </div>
+  </div>
+ );
 }
-
-

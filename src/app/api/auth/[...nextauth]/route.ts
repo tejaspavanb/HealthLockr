@@ -14,7 +14,7 @@ const credentialsSchema = z.object({
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  session: { strategy: "database" },
+  session: { strategy: "jwt" },
   providers: [
     Credentials({
       name: "Email/Aadhaar + Password",
@@ -50,6 +50,9 @@ export const authOptions: NextAuthOptions = {
           name: user.name ?? undefined,
           image: user.image ?? undefined,
           role: user.role,
+          hospitalName: user.hospitalName,
+          hospitalId: user.hospitalId,
+          aadhaarNumber: user.aadhaarNumber,
         } as any;
       },
     }),
@@ -64,6 +67,12 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.sub!;
         // @ts-expect-error custom
         session.user.role = token.role as "USER" | "DOCTOR" | "HOSPITAL";
+        // @ts-expect-error custom
+        session.user.hospitalName = token.hospitalName ?? null;
+        // @ts-expect-error custom
+        session.user.hospitalId = token.hospitalId ?? null;
+        // @ts-expect-error custom
+        session.user.aadhaarNumber = token.aadhaarNumber ?? null;
       }
       return session;
     },
@@ -71,66 +80,14 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         // @ts-expect-error from authorize
         token.role = user.role;
+        // @ts-expect-error from authorize
+        token.hospitalName = user.hospitalName ?? null;
+        // @ts-expect-error from authorize
+        token.hospitalId = user.hospitalId ?? null;
+        // @ts-expect-error from authorize
+        token.aadhaarNumber = user.aadhaarNumber ?? null;
       }
       return token;
-    },
-  },
-};
-
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
-
-import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { type NextAuthOptions } from "next-auth";
-import EmailProvider from "next-auth/providers/email";
-import { PrismaClient } from "@prisma/client";
-import nodemailer from "nodemailer";
-
-const prisma = new PrismaClient();
-
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_SERVER_HOST,
-  port: Number(process.env.EMAIL_SERVER_PORT ?? 465),
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_SERVER_USER!,
-    pass: process.env.EMAIL_SERVER_PASSWORD!,
-  },
-});
-
-export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
-  session: { strategy: "database" },
-  providers: [
-    EmailProvider({
-      id: "email",
-      name: "Email",
-      server: transporter,
-      from: process.env.EMAIL_FROM,
-      maxAge: 10 * 60, // 10 minutes
-      sendVerificationRequest: async ({ identifier, url }) => {
-        await transporter.sendMail({
-          to: identifier,
-          from: process.env.EMAIL_FROM!,
-          subject: "Your HealthLockr sign-in code",
-          html: `<p>Use the link below to sign in:</p><p><a href="${url}">${url}</a></p><p>This link expires in 10 minutes.</p>`,
-        });
-      },
-    }),
-  ],
-  pages: {
-    signIn: "/login",
-    verifyRequest: "/verify",
-  },
-  callbacks: {
-    session: async ({ session, user }) => {
-      if (session.user) {
-        session.user.id = user.id;
-        // @ts-expect-error
-        session.user.role = (user as any).role;
-      }
-      return session;
     },
   },
 };

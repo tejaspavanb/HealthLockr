@@ -20,6 +20,9 @@
     "nodemailer": "^7.0.10",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "@uploadthing/react": "^6.7.3",
+    "clsx": "^2.1.0",
+    "uploadthing": "^6.7.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {

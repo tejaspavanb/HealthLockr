@@ -11,7 +11,7 @@ export async function GET() {
 
   const records = await prisma.record.findMany({
     where: { ownerId: session.user.id },
-    orderBy: { createdAt: "desc" },
+    orderBy: { recordDate: "desc" },
   });
 
   return NextResponse.json({ records });
