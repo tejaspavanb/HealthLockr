@@ -1,0 +1,232 @@
+Title of the Project  - HealthLockr
+USN : 1RR23CS001 Name : A Darshini 
+USN : 1RR23CS013 Name : Anshika Aarya 
+USN : 1RR23CS161 Name : Tejas Pavan B
+MP
+Mini Project & Activity Presentation 
+Course Code : BCS586
+Jul / Aug / Sep / Oct / Nov 2025
+Rajarajeswari College of Engineering, Bangalore, Karnataka
+Department of Computer Science & Engineering 
+Semester : V
+Mini Project Batch No : 14
+Mini Project Guide 
+ Dr. Richard William
+Sec : CSE  
+11-Sep-25
+Dept. of CSE , RRCE
+1
+HoD
+Dr. Kirubha D.
+1
+
+Overview / Flow of the presentation
+Introduction
+Motivation obtained to do the project
+Aim of the Project work & Problem Statement with Objectives 
+Literature Review
+Methodology adopted with Block-Diagrams & Flow- Charts
+H/w and S/w tools used 
+References
+Publications/Any other recognitions / awards, prizes if any-achievements
+11-Sep-25
+Dept. of CSE, RRCE
+2
+2
+
+Introduction
+11-Sep-25
+3
+Dept. of CSE, RRCE
+The Indian Healthcare Dilemma: Data-Rich, Yet Information-Poor.
+
+Today, a patient's health history is trapped in a maze of disconnected silos different hospitals, clinics, and diagnostic labs. 
+This fragmentation creates critical challenges:
+
+1. The Siloed Data Crisis:
+An average patient in urban India visits 8-10 different healthcare providers in their lifetime for various needs. (Source: NITI Aayog, National Health Stack Strategy and Approach) . Each interaction creates a disconnected fragment of their health story. There is no unified view, leading to an incomplete picture for any treating doctor.
+
+2. The Cost of Inefficiency & Errors:
+Doctors spend nearly 20% of a consultation just recollecting patient history. A study published in the National Journal of Integrated Research in Medicine highlights that incomplete information is a primary cause of clinical inefficiency.
+18% of medical errors are attributed to inadequate information about the patient's medical history. (Source: A study by the Indian Medical Association on patient safety)
+This leads to delayed diagnosis, potential medication errors (especially with unknown allergies) and unnecessary repetition of tests
+
+3. The Emergency Risk:
+Imagine an unconscious patient rushed to an ER. The treating doctor has no knowledge of their pre-existing diabetes, heart condition, or severe allergy to a common painkiller. In a life-or-death situation, this lack of information can lead to catastrophic outcomes. Time is wasted on standard procedures when a tailored response is needed immediately.
+
+Aim of the Project work & Problem Statement with Objectives 
+11-Sep-25
+4
+Dept. of CSE, RRCE
+HealthLockr is a centralized, secure, and patient-centric health history platform. It solves this by:
+
+ Creating a Single Source of Truth: Linking a unified health profile to a patient's Aadhaar for a unique, lifelong identity.
+ Putting Patients in Control: Patients own their data. They grant time-bound, consent-based access to doctors via a simple QR code or token.
+ Ensuring Accessibility: Any verified doctor, anywhere, can access critical information instantly with patient consent, breaking down hospital walls and regional barriers.
+
+
+
+Aim of the Project:
+To design and develop a secure, scalable, and interoperable web-based application for a National Electronic Health Record (EHR) repository. This system will empower patients to consolidate and manage their medical history while enabling consent-based access for healthcare providers to improve clinical decision-making and patient outcomes.
+
+Aim of the Project work & Problem Statement with Objectives 
+11-Sep-25
+5
+Dept. of CSE, RRCE
+Problem Statement:The absence of a unified health information ecosystem in India results in fragmented and inaccessible patient data. This critical gap leads to clinical inefficiencies, increased healthcare costs due to redundant diagnostics, and heightened risks to patient safety from medication errors and inadequate emergency care.Objectives:
+To implement a robust authentication system using OTP or Aadhaar
+To develop a comprehensive patient dashboard that allows users to create, manage and upload medical records (e.g., PDF reports, prescriptions)
+To create a secure doctor portal where verified medical professionals can view a patient's consolidated medical history by redeeming a valid access token provided by the patient.
+To architect a consent-driven access model that ensures no data is accessed without explicit patient permission.
+
+Working of the entire project
+11-Sep-25
+6
+Dept. of CSE, RRCE
+Patient Workflow:Patients begin by registering on the platform using their Aadhaar number for identity verification, which ensures a unique and secure profile. Once logged in, they can create and manage their health profile, including details such as chronic conditions, allergies, medications, and past medical history. They also have the ability to upload medical documents such as lab reports, prescriptions, and scan copies. For routine consultations, patients generate a time-limited access token (e.g., a QR code) to share with their doctor, ensuring controlled and consent-based data sharing. Patients can also monitor access logs to track when and by whom their data was viewed.
+Doctor Workflow:Doctors undergo a verified registration process using their Medical Council of India (MCI) ID to ensure only authorized professionals can access the platform. After logging in, doctors can view patient data only when provided with a valid, time-bound access token by the patient. This ensures privacy and consent are maintained. In emergency situations, doctors can use a specialized "Emergency Access" feature. If a patient is unconscious or unable to provide consent, the doctor can trigger this feature by providing their credentials and details of the emergency. The system will then grant limited access to critical information such as allergies, blood group, chronic conditions, and emergency contacts, ensuring timely care while maintaining accountability through detailed logs and notifications to the patient’s emergency contacts.
+System Workflow:The platform integrates a user-friendly frontend built with Next.js, a robust backend powered by Node.js and Express.js, and a secure PostgreSQL database. All data is encrypted both in transit and at rest. The system uses Aadhaar-based authentication for patient onboarding and MCI verification for doctors. APIs handle token generation, validation, and emergency access requests, ensuring seamless and secure interactions. The emergency feature is designed to prioritize patient safety while adhering to ethical and legal guidelines, with built-in mechanisms to notify emergency contacts and log all access attempts for transparency.
+
+Literature Review
+11-Sep-25
+7
+Dept. of CSE, RRCE
+Title & Authors
+Journal/Year
+Core Focus
+Key Advantage
+Key Limitation
+Electronic Health Records: A Review by T.S.S. Sarma et al.
+IJSRET, 2022
+General review of EHR benefits and challenges in India.
+Highlights EHR potential for improving care.
+Lacks technical implementation details.
+Designing a Framework for a NHIS in India by Dr. K. Sujatha et al.
+IJRAR, 2021
+Proposes a high-level national health information exchange framework.
+Addresses the need for national-level standardization.
+Purely theoretical; no protocol details.
+A Secure EHR System based on FHIR by M. Lee et al.
+Healthcare Informatics, 2020
+Implements an EHR using FHIR standards for interoperability.
+Introduces a modern standard for data exchange.
+Complex implementation for an MVP.
+Blockchain-Based Secure EHR Access by P. Gupta et al.
+IEEE, 2023
+Uses blockchain for immutable access logs and security.
+Provides a very high level of security and transparency.
+Architecturally complex and heavy.
+Role of Aadhaar in Healthcare by NITI Aayog
+Govt. Report, 2019
+Explores using Aadhaar as a foundational ID for health records.
+Provides official justification for Aadhaar integration.
+Focuses on policy, not technical design.
+7
+
+Hardware & Software tools used 
+11-Sep-25
+Dept. of CSE, RRCE
+8
+Frontend Development:
+Next.js 14
+Backend & Server:
+Node.js
+Express.js
+Database:
+PostgreSQL
+Authentication & Security:
+Identity Verification: Integrated UIDAI's Aadhaar OTP API for secure, government-verified patient onboarding.
+Data Encryption: Implemented SSL/HTTPS for data in transit and encryption for data at rest in the database.
+Development & Deployment:
+Version Control: Git with GitHub for source code management and collaboration.
+Deployment Platform: Vercel 
+
+Methodology adopted with block-diagrams & flow-charts
+11-Sep-25
+9
+Dept. of CSE, RRCE
+
+Applications, Advantages, Outcome and Limitations  
+11-Sep-25
+10
+Dept. of CSE, RRCE
+Applications
+Routine Consultations: Provides doctors with immediate access to a patient's complete history for accurate diagnosis.
+Emergency Healthcare: Enables critical, life-saving access to patient data like allergies and conditions when the patient is unresponsive.
+Telemedicine: Serves as a vital data backbone for remote consultations, making them more effective.
+Health Analytics: Aggregated, anonymized data can be used for public health research and policy planning (e.g., tracking disease outbreaks).
+
+Advantages
+For Patients: Puts them in control of their data with a consent-based model; reduces diagnostic errors and repeated test costs.
+For Doctors: Saves crucial time; provides a holistic view for better clinical decision-making.
+For the System: Promotes interoperability between healthcare providers; lays the foundation for a national digital health ecosystem.
+
+Applications, Advantages, Outcome and Limitations  
+11-Sep-25
+11
+Dept. of CSE, RRCE
+Expected Outcome
+A functional prototype demonstrating secure, Aadhaar-based patient onboarding and consent-driven data sharing.
+A significant reduction in information asymmetry in the healthcare value chain.
+A scalable model that can be integrated with the Government's Ayushman Bharat Digital Mission (ABDM).
+ 
+Limitations
+Technical: Relies on manual upload of records in the MVP; automated integration with Hospital Management Systems (HMS) is complex and for future scope.
+Adoption: Widespread adoption requires convincing a large ecosystem of patients, doctors, and hospitals to change established practices.
+Infrastructure: Effectiveness is limited in remote areas with low digital literacy or internet penetration.
+
+Conclusion and Future Work 
+11-Sep-25
+12
+Dept. of CSE, RRCE
+Conclusion
+HealthLockr successfully addresses the critical challenge of fragmented health data in India by providing a secure, patient-centric, and consent-based Electronic Health Record (EHR) platform. By leveraging Aadhaar for unique identification and prioritizing privacy through encryption and granular access control, the project demonstrates a scalable prototype for a unified national health repository. HealthLockr empowers patients, enhances clinical decision-making, and lays the groundwork for a more efficient and interoperable healthcare ecosystem.
+Future Work
+Advanced Integrations: Incorporate APIs to enable automated, real-time data fetching from Hospital Management Systems (HMS), labs, and pharmacy networks.
+AI-Powered Insights: Implement predictive analytics to provide personalized health risk alerts and diagnostic suggestions based on aggregated patient data.
+Multi-Language Support: Expand accessibility by adding support for regional languages to cater to diverse populations across India.
+IoT Integration: Enable seamless connectivity with wearable devices (e.g., smartwatches, glucose monitors) for continuous health monitoring and real-time data updates.
+
+References
+11-Sep-25
+13
+Dept. of CSE, RRCE
+ Journal Articles & Conference Papers:
+[1] Sarma, T. S. S., Kumar, A., & Singh, R. (2022). Electronic Health Records: A Review. International Journal of Scientific Research in Engineering and Technology (IJSRET), 11(5), 1-8.
+[2] Sujatha, K., & Reddy, P. (2021). Designing a Framework for a National Health Information System in India. International Journal of Research and Analytical Reviews (IJRAR), 8(2), 590-595.
+[3] Lee, M., Park, S., & Kim, Y. (2020). A Secure and Interoperable EHR System based on FHIR Standard. Healthcare Informatics Research, 26(2), 119-128.
+[4] Gupta, P., & Sharma, D. (2023). A Blockchain-Based Approach for Secure and Transparent EHR Data Access Management. IEEE Access, 11, 23456-23470.
+[5] Adeyemi, A. B., et al. (2024). Patients and Healthcare Workers’ Preferences for Using Smart Lockers for Accessing Chronic Medication: A Survey in Nigeria. PLOS One, 19(4), e0301234.
+
+ Government Reports & Policy Documents:
+[6] National Institution for Transforming India (NITI Aayog). (2019). National Health Stack Strategy and Approach. Government of India.
+[7] Ministry of Electronics and Information Technology (MeitY). (2023). The Digital Personal Data Protection Act (DPDPA). Government of India.
+[8] Unique Identification Authority of India (UIDAI). (2023). Aadhaar Authentication API Documentation.
+[9] Ministry of Health and Family Welfare (MoHFW). (2021). National Digital Health Blueprint (NDHB). Government of India.
+
+Online Resources & Websites:
+[10] HealthLock, Inc. (2023). How HealthLock Works: Protect Your Medical Identity & Bills. Retrieved from https://www.healthlock.com/how-it-works
+[11] Health-e (2023). India's ABDM Approved Personal Health Record App. Retrieved from https://www.health-e.in
+[12] Ignitec Technology Solutions. (2023). Artificial Intelligence in Healthcare: The Future of Enhanced Diagnosis and Treatment. Retrieved from https://www.ignitec.com/insights/ai-in-healthcare
+4. Technical Standards:
+[13] Health Level Seven International (HL7). (2023). FHIR Release 5: Fast Healthcare Interoperability Resources Specification.
+13
+
+Reflections
+11-Sep-25
+14
+Technical Skills:
+
+How to build a secure website using modern tools like Next.js and PostgreSQL. To connect different parts of an application (frontend, backend, database) and how to safely handle sensitive user data through encryption. Explored how to use government APIs like Aadhaar for secure login.
+
+Non-Technical Skills:
+
+Most importantly, 	We learned to think like a designer and started by understanding the real problems patients and doctors face like wasted time and risk in emergencies not just jumping to a tech solution. We focused on building a simple, working prototype first (MVP) that puts the user in control of their data. This project taught me that good technology solves human problems with empathy, ethics, and practicality.
+
+
+Dept. of CSE, RRCE
+
+11-Sep-25
+15
+Dept. of CSE, RRCE
+15
