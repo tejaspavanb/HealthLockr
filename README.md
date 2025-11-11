@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HealthLockr
 
-## Getting Started
+Secure, consent-based medical record access. Three roles:
+- User: view own records
+- Doctor: search users by Aadhaar/email and view records (access is logged)
+- Hospital: upload records for users
 
-First, run the development server:
+## Stack
+- Next.js 14 (App Router), React Compiler
+- NextAuth (Credentials: email/Aadhaar + password)
+- Prisma + PostgreSQL (Neon recommended)
+- Tailwind CSS
 
+## Prerequisites
+- Node.js 18+
+- A PostgreSQL URL (e.g., from Neon)
+
+## Setup
+
+1) Install dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2) Configure environment
+Create a file `.env.local` with:
+```
+DATABASE_URL=postgres://USER:PASSWORD@HOST:PORT/DB?sslmode=require
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=replace-with-a-long-random-string
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3) Database
+```bash
+npx prisma db push
+npx prisma generate
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4) Dev
+```bash
+npm run dev
+```
 
-## Learn More
+Open http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+## Roles and Flows
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Login:
+  - Choose role (User, Doctor, Hospital)
+  - Enter Email or Aadhaar + Password
+- User:
+  - See own records
+- Hospital:
+  - Upload record for a user by email/Aadhaar (stores URL in MVP)
+- Doctor:
+  - Search patient by email/Aadhaar
+  - View record (logs an AccessLog entry)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment (Vercel)
+- Push to GitHub
+- Import repo in Vercel
+- Add env vars in Vercel (.env.local values)
+- Deploy
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Next steps (nice to have)
+- File storage (Vercel Blob/S3)
+- Email OTP login
+- Consent tokens + QR codes
+- At-rest encryption keys management
