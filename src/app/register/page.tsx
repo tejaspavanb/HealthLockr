@@ -45,13 +45,13 @@ export default function RegisterPage() {
  }
 
  return (
-  <main className="mx-auto flex min-h-[calc(100vh-80px)] w-full max-w-4xl items-center justify-center px-4 py-10">
-   <div className="w-full rounded-3xl bg-white p-8 shadow-xl shadow-slate-200/60 sm:p-10">
+  <main className="mx-auto flex min-h-[calc(100vh-80px)] w-full max-w-4xl items-center justify-center px-4 py-10 bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+   <div className="w-full rounded-3xl bg-white p-8 shadow-2xl border-2 border-indigo-100 sm:p-10">
     <div className="space-y-2">
-     <p className="text-sm font-medium uppercase tracking-wide text-indigo-600">
+     <p className="text-sm font-bold uppercase tracking-wide bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
       Get started
      </p>
-     <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">
+     <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent sm:text-4xl">
       Create your HealthLockr account
      </h1>
      <p className="text-sm text-slate-600">
@@ -102,20 +102,23 @@ export default function RegisterPage() {
       />
      </div>
 
-     <div>
-      <label className="block text-sm font-medium text-slate-800">
-       Aadhaar number
-      </label>
-      <input
-       className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
-       value={aadhaarNumber}
-       onChange={(e) => setAadhaar(e.target.value)}
-       placeholder="12-digit Aadhaar"
-      />
-      <p className="mt-1 text-xs text-slate-500">
-       Required for patients and doctors to verify identity.
-      </p>
-     </div>
+     {(role === "USER" || role === "DOCTOR") && (
+      <div>
+       <label className="block text-sm font-medium text-slate-800">
+        Aadhaar number <span className="text-red-500">*</span>
+       </label>
+       <input
+        className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+        value={aadhaarNumber}
+        onChange={(e) => setAadhaar(e.target.value)}
+        placeholder="12-digit Aadhaar"
+        required
+       />
+       <p className="mt-1 text-xs text-slate-500">
+        Required for patients and doctors to verify identity.
+       </p>
+      </div>
+     )}
 
      {role === "DOCTOR" && (
       <div>
@@ -134,22 +137,24 @@ export default function RegisterPage() {
       <>
        <div>
         <label className="block text-sm font-medium text-slate-800">
-         Hospital name
+         Hospital name <span className="text-red-500">*</span>
         </label>
         <input
          className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
          value={hospitalName}
          onChange={(e) => setHospitalName(e.target.value)}
+         required
         />
        </div>
        <div>
         <label className="block text-sm font-medium text-slate-800">
-         Hospital ID
+         Hospital ID <span className="text-red-500">*</span>
         </label>
         <input
          className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
          value={hospitalId}
          onChange={(e) => setHospitalId(e.target.value)}
+         required
         />
        </div>
       </>
@@ -165,14 +170,14 @@ export default function RegisterPage() {
       <button
        type="submit"
        disabled={loading}
-       className="w-full rounded-xl bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:bg-indigo-300"
+       className="w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-base font-bold text-white shadow-lg transition hover:from-indigo-700 hover:to-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
       >
        {loading ? "Creating account..." : "Create account"}
       </button>
       <p className="mt-3 text-sm text-slate-600">
        Already have an account?{" "}
        <a
-        className="font-semibold text-indigo-600 hover:text-indigo-500"
+        className="font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent hover:from-indigo-700 hover:to-purple-700"
         href="/login"
        >
         Sign in
