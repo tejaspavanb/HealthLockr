@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { UploadDropzone } from "@/lib/uploadthing";
+import { useState, useEffect } from "react";
+import { UploadButton } from "@/lib/uploadthing";
 
 type UploadResult = {
  url: string;
@@ -24,6 +24,20 @@ export function RecordUploader({ variant, onUploaded }: RecordUploaderProps) {
  const [submitting, setSubmitting] = useState(false);
  const [message, setMessage] = useState<string | null>(null);
  const [messageVariant, setMessageVariant] = useState<"info" | "error" | "success">("info");
+ const [uploadError, setUploadError] = useState<string | null>(null);
+
+ useEffect(() => {
+  // Test if UploadThing endpoint is accessible
+  fetch("/api/uploadthing", { method: "GET" })
+   .then((res) => {
+    if (!res.ok) {
+     setUploadError("UploadThing endpoint not accessible. Check UPLOADTHING_TOKEN in .env");
+    }
+   })
+   .catch(() => {
+    setUploadError("Cannot connect to UploadThing. Check your configuration.");
+   });
+ }, []);
 
  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   e.preventDefault();
@@ -144,46 +158,59 @@ export function RecordUploader({ variant, onUploaded }: RecordUploaderProps) {
      />
     </div>
 
-    <div className="space-y-3">
+    <div className="space-y-2">
      <label className="block text-sm font-medium text-slate-800">
       Upload document
      </label>
-     <div className="rounded-2xl border border-dashed border-indigo-200 bg-indigo-50/60 p-4">
-      <UploadDropzone
-       endpoint="medicalRecord"
-       appearance={{
-        button:
-         "ut-uploading:opacity-80 ut-ready:bg-indigo-600 ut-ready:hover:bg-indigo-500 ut-ready:text-white ut-uploading:bg-slate-400 ut-uploading:text-white",
-        container: "ut-border-none ut-bg-transparent",
-        label: "text-slate-900 font-semibold",
-        allowedContent: "text-slate-600 text-sm",
-       }}
-       onClientUploadComplete={(res) => {
-        if (!res?.length) return;
-        const file = res[0];
-        setUploadResult({
-         key: file.key,
-         url: file.url,
-         name: file.name ?? "Document",
-         size: file.size ?? 0,
-        });
-        setMessageVariant("info");
-        setMessage("Document uploaded. Click save to finish.");
-       }}
-       onUploadError={(error: Error) => {
-        setMessageVariant("error");
-        setMessage(error.message);
-       }}
-      />
-     </div>
-     {uploadResult && (
-      <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
-       <div className="font-medium">{uploadResult.name}</div>
-       <div className="text-xs uppercase text-slate-500">
-        {(uploadResult.size / (1024 * 1024)).toFixed(2)} MB
-       </div>
+     {uploadError && (
+      <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+       {uploadError}
       </div>
      )}
+     <div className="flex items-center gap-3">
+      <div className="[&_button]:!bg-indigo-600 [&_button]:!text-white [&_button]:!border-none [&_button]:!cursor-pointer [&_button[disabled]]:!bg-slate-300 [&_button[disabled]]:!cursor-not-allowed">
+       <UploadButton
+        endpoint="medicalRecord"
+        content={{
+         button: "Choose File",
+         allowedContent: "PDF or images up to 16MB",
+        }}
+        className="ut-button:bg-indigo-600 ut-button:text-white ut-button:hover:bg-indigo-500 ut-button:px-4 ut-button:py-2 ut-button:rounded-lg ut-button:font-medium ut-allowed-content:text-slate-600 ut-allowed-content:text-xs"
+        onClientUploadComplete={(res) => {
+         if (!res?.length) return;
+         const file = res[0];
+         setUploadResult({
+          key: file.key,
+          url: file.url,
+          name: file.name ?? "Document",
+          size: file.size ?? 0,
+         });
+         setMessageVariant("info");
+         setMessage("Document uploaded. Click save to finish.");
+         setUploadError(null);
+        }}
+        onUploadError={(error: Error) => {
+         setMessageVariant("error");
+         setMessage(`Upload failed: ${error.message}`);
+         setUploadError(error.message);
+         console.error("UploadThing error:", error);
+        }}
+        onUploadBegin={(name) => {
+         setMessageVariant("info");
+         setMessage(`Uploading ${name}...`);
+         setUploadError(null);
+        }}
+       />
+      </div>
+      {uploadResult && (
+       <div className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700">
+        <div className="font-medium">{uploadResult.name}</div>
+        <div className="text-xs text-slate-500">
+         {(uploadResult.size / (1024 * 1024)).toFixed(2)} MB
+        </div>
+       </div>
+      )}
+     </div>
     </div>
 
     {message && (
