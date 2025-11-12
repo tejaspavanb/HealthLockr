@@ -3,15 +3,34 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { hashPassword } from "@/lib/auth";
 
+const optionalTrimmed = z
+ .string()
+ .trim()
+ .transform((value) => (value.length === 0 ? undefined : value))
+ .optional();
+
 const schema = z.object({
  role: z.enum(["USER", "DOCTOR", "HOSPITAL"]),
- name: z.string().min(1),
+ name: z.string().trim().min(1),
  email: z.string().email(),
  password: z.string().min(6),
- aadhaarNumber: z.string().min(6).max(16).trim().optional(),
- mciId: z.string().trim().optional(),
- hospitalName: z.string().trim().optional(),
- hospitalId: z.string().trim().optional(),
+ aadhaarNumber: z.preprocess(
+  (value) => {
+   if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed.length === 0 ? undefined : trimmed;
+   }
+   return value;
+  },
+  z
+   .string()
+   .min(6, "Aadhaar number must be at least 6 characters")
+   .max(16, "Aadhaar number must be at most 16 characters")
+   .optional()
+ ),
+ mciId: optionalTrimmed,
+ hospitalName: optionalTrimmed,
+ hospitalId: optionalTrimmed,
 });
 
 export async function POST(req: NextRequest) {
