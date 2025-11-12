@@ -1,4 +1,4 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
@@ -6,7 +6,12 @@ import { UploadThingError } from "uploadthing/server";
 const f = createUploadthing();
 
 export const fileRouter = {
- medicalRecord: f({ "application/pdf": { maxFileSize: "16MB" }, "image/*": { maxFileSize: "8MB" } })
+ medicalRecord: f({
+   "application/pdf": { maxFileSize: "16MB" },
+   "image/*": { maxFileSize: "8MB" },
+   // UploadThing's current type definitions don't expose arbitrary mime-type keys.
+   // Casting avoids a false positive while keeping the runtime behaviour intact.
+ } as any)
   .middleware(async () => {
    const session = await getServerSession(authOptions);
    if (!session) throw new UploadThingError("You must be signed in to upload");
